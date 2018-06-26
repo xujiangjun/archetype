@@ -1,0 +1,14 @@
+### Common ###
+*~
+*.log
+**/target/
+**/rebel.xml
+### Eclipse ###
+.project
+.classpath
+.settings/
+### IntelliJ IDEA ###
+*.iml
+*.ipr
+*.iws
+.idea/

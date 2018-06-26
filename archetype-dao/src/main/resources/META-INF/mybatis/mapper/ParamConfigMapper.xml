@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xujiangjun.archetype.dao.config.ParamConfigMapper">
+  <resultMap id="BaseResultMap" type="com.xujiangjun.archetype.model.config.ParamConfigDO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="param_name" jdbcType="VARCHAR" property="paramName" />
+    <result column="param_no" jdbcType="VARCHAR" property="paramNo" />
+    <result column="param_value" jdbcType="VARCHAR" property="paramValue" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, is_deleted, creator, gmt_create, modifier, gmt_modified, param_name, param_no, 
+    param_value, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from c_param_config
+    where id = #{id,jdbcType=INTEGER} and is_deleted = '0'
+  </select>
+  <insert id="insert" parameterType="com.xujiangjun.archetype.model.config.ParamConfigDO">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into c_param_config (is_deleted, creator, gmt_create, 
+      modifier, gmt_modified, param_name, 
+      param_no, param_value, remark
+      )
+    values (#{isDeleted,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP},
+      #{modifier,jdbcType=VARCHAR}, #{gmtModified,jdbcType=TIMESTAMP}, #{paramName,jdbcType=VARCHAR}, 
+      #{paramNo,jdbcType=VARCHAR}, #{paramValue,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xujiangjun.archetype.model.config.ParamConfigDO">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into c_param_config
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="modifier != null">
+        modifier,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="paramName != null">
+        param_name,
+      </if>
+      <if test="paramNo != null">
+        param_no,
+      </if>
+      <if test="paramValue != null">
+        param_value,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paramName != null">
+        #{paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="paramNo != null">
+        #{paramNo,jdbcType=VARCHAR},
+      </if>
+      <if test="paramValue != null">
+        #{paramValue,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xujiangjun.archetype.model.config.ParamConfigDO">
+    update c_param_config
+    <set>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paramName != null">
+        param_name = #{paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="paramNo != null">
+        param_no = #{paramNo,jdbcType=VARCHAR},
+      </if>
+      <if test="paramValue != null">
+        param_value = #{paramValue,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER} and is_deleted = '0'
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xujiangjun.archetype.model.config.ParamConfigDO">
+    update c_param_config
+    set is_deleted = #{isDeleted,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      param_name = #{paramName,jdbcType=VARCHAR},
+      param_no = #{paramNo,jdbcType=VARCHAR},
+      param_value = #{paramValue,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER} and is_deleted = '0'
+  </update>
+
+  <!-- 扩展自动生成或自定义的SQl语句写在此之后 -->
+  <select id="selectByParamNo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from c_param_config
+    where param_no = #{paramNo,jdbcType=VARCHAR} and is_deleted = '0'
+  </select>
+
+  <update id="updateByParamNo" parameterType="com.xujiangjun.archetype.model.config.ParamConfigDO">
+    update c_param_config
+    <set>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paramName != null">
+        param_name = #{paramName,jdbcType=VARCHAR},
+      </if>
+      <if test="paramValue != null">
+        param_value = #{paramValue,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where param_no = #{paramNo,jdbcType=VARCHAR} and is_deleted = '0'
+  </update>
+</mapper>

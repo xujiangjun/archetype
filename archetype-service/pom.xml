@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- 定义父模块 -->
+    <parent>
+        <artifactId>archetype</artifactId>
+        <groupId>com.xujiangjun.archetype</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <!-- 定义项目坐标:groupId和version与父模块一致 -->
+    <artifactId>archetype-service</artifactId>
+    <packaging>jar</packaging>
+    <name>archetype-service</name>
+
+    <!-- 自定义属性 -->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <!-- 依赖管理 -->
+    <dependencies>
+        <dependency>
+            <groupId>com.xujiangjun.archetype</groupId>
+            <artifactId>archetype-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xujiangjun.archetype</groupId>
+            <artifactId>archetype-manager</artifactId>
+        </dependency>
+    </dependencies>
+</project>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.xujiangjun.archetype"/>
+
+    <!-- 定义属性占位符${}里的变量来源文件 -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="locations">
+            <list>
+                <value>classpath:config/config.properties</value>
+                <value>classpath:config/jdbc.properties</value>
+                <value>classpath:config/dubbo.properties</value>
+                <value>classpath:config/redis.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 引入Spring配置文件 -->
+    <import resource="classpath:spring/archetype-dao.xml"/>
+    <import resource="classpath:spring/archetype-service.xml"/>
+    <import resource="classpath:spring/archetype-dubbo-context.xml"/>
+    <import resource="classpath:spring/archetype-redis.xml"/>
+</beans>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+    <!-- 配置SpringMVC -->
+    <!-- 1.开启SpringMVC注解模式 -->
+    <!-- 简化配置：
+        1)自动注册DefaultAnnotationHandlerMapping，AnnotationMethodHandlerAdapter
+        2)提供一系列功能：数据绑定, 数据和日期的format @NumberFormat、@DateTimeFormat,
+        xml和json默认读写支持
+    -->
+    <mvc:annotation-driven conversion-service="conversionService">
+        <mvc:message-converters register-defaults="true">
+            <!-- StringHttpMessageCOnverter的默认编码设为UTF-8 -->
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8"/>
+            </bean>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json;charset=UTF-8</value>
+                        <value>text/html;charset=UTF-8</value>
+                    </list>
+                </property>
+                <!--
+                    http://blog.csdn.net/z69183787/article/details/40375831
+                    MappingJackson2HttpMessageConverter通过ObjectMapper来实现返回json字符串
+                 -->
+                <property name="objectMapper" ref="customObjectMapper"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <bean id="customObjectMapper" class="com.xujiangjun.archetype.web.support.CustomObjectMapper">
+        <!-- 如果设置为NON_NULL，返回值字段中含null值，则不会序列化返回 -->
+        <property name="serializationInclusion" value="ALWAYS"/>
+    </bean>
+
+    <!--
+        <mvc:annotation-driven/>会默认创建的ConversionService实例就是FormattingConversionServiceFactoryBean
+        FormattingConversionServiceFactoryBean会自动注册NumberFormatAnnotationFormatterFactory（@NumberFormat）和
+        JodaDateTimeFormatterAnnotationFormatterFactory，因此可以使用@DateTimeFormat和@NumberFormat注解
+     -->
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <!-- 自定义的Convert -->
+                <!--<bean class="com.xujiangjun.archetype.web.support.XXToXXConvert" />-->
+                <bean class="com.xujiangjun.archetype.web.support.DateConverter"/>
+            </set>
+        </property>
+    </bean>
+
+    <!--
+        <mvc:annotation-driven/>会默认装配一个LocalValidatorFactoryBean，通过在处理方法的入参对象前标注@Valid注解，同时
+        在其后声明一个BindingResult入参，根据BindingResult即可判断是否存在错误，如果有错误，则自定义返回结果
+    -->
+    <!--<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>-->
+
+    <!-- 2.静态资源默认servlet配置
+        1)加入对静态资源处理，js css gif jpg png
+        2)允许使用"/"做整体映射
+    -->
+    <mvc:default-servlet-handler/>
+
+    <!-- 3.配置jsp视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="maxUploadSize" value="100000000"/> <!-- 支持文件大小100M -->
+    </bean>
+
+</beans>

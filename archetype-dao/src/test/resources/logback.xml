@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="app_name" value="archetype"/>
+    <property name="app_log_level" value="debug"/>
+    <property name="app_log_root" value="/Users/xujiangjun/logs"/>
+    <property name="app_log_charset" value="UTF-8" />
+    <property name="app_log_pattern"
+              value = "[%d{'MM-dd HH:mm:ss,SSS',GMT+8:00}] %-5p [%X{IP}][%X{CU}][%.10t] %logger{36}[%L] - %m%n" />
+
+    <!-- 可通过logback官网中Configuration章节拷贝 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are assigned the type
+             ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <charset>${app_log_charset}</charset>
+        </encoder>
+    </appender>
+
+    <appender name="COMMON" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${app_log_root}/${app_name}-common.log</file>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${app_log_root}/${app_name}-common.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>${app_log_charset}</charset>
+            <pattern>${app_log_pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="REMOTE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${app_log_root}/${app_name}-remote.log</file>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${saint_log_root}/${app_name}-remote.%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <charset>${app_log_charset}</charset>
+            <pattern>${app_log_pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${app_log_root}/${app_name}-error.log</file>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${app_log_root}/${app_name}-error.%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <encoder>
+            <charset>${app_log_charset}</charset>
+            <pattern>${app_log_pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!--<appender name="EMAIL" class="ch.qos.logback.classic.net.SMTPAppender">-->
+    <!--<smtpHost>${saint_SMTP_SERVER_IP}</smtpHost>-->
+    <!--<smtpPort>${saint_SMTP_SERVER_PORT}</smtpPort>-->
+    <!--<username>${saint_SMTP_USERNAME}</username>-->
+    <!--<password>${saint_SMTP_PASSWORD}</password>-->
+    <!--<SSL>false</SSL>-->
+    <!--<asynchronousSending>false</asynchronousSending>-->
+    <!--<to>${saint_ERROR_LOG_TOUSERS}</to>-->
+    <!--<from>${saint_SMTP_USERNAME}</from>-->
+    <!--<subject>${saint_ERROR_LOG_SUBJECT}</subject>-->
+    <!--<layout class="ch.qos.logback.classic.PatternLayout">-->
+    <!--<pattern>[%d{'MM-dd HH:mm:ss,SSS',GMT+8:00}] %-5p [%.10t][%X{CU}] %logger[%L] - %m%n</pattern>-->
+    <!--</layout>-->
+    <!--<filter class="ch.qos.logback.core.filter.EvaluatorFilter">-->
+    <!--<evaluator class="ch.qos.logback.classic.boolex.JaninoEventEvaluator">-->
+    <!--<expression>-->
+    <!--&lt;!&ndash; & encoded as &amp; &ndash;&gt;-->
+    <!--if(level > WARN ) {-->
+    <!--return true;-->
+    <!--}-->
+    <!--return false;-->
+    <!--</expression>-->
+    <!--</evaluator>-->
+    <!--<onMatch>ACCEPT</onMatch>-->
+    <!--<onMismatch>DENY</onMismatch>-->
+    <!--</filter>-->
+    <!--</appender>-->
+
+    <logger name="com.xujiangjun.archetype" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="COMMON"/>
+        <appender-ref ref="ERROR"/>
+        <!--<appender-ref ref="EMAIL"/>-->
+    </logger>
+    <logger name="com.ibatis" additivity="false">
+        <level value="WARN" />
+        <appender-ref ref="ERROR" />
+    </logger>
+    <logger name="org.mybatis.spring" additivity="false">
+        <level value="debug" />
+        <appender-ref ref="ERROR" />
+    </logger>
+    <logger name="org.springframework" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="ERROR" />
+    </logger>
+
+    <root>
+        <level value="${app_log_level}"/>
+        <appender-ref ref="COMMON" />
+        <appender-ref ref="ERROR" />
+        <!--<appender-ref ref="EMAIL" />-->
+    </root>
+</configuration>

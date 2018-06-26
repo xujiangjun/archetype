@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		   http://code.alibabatech.com/schema/dubbo
+		   http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 提供方应用信息，用于计算依赖关系 -->
+    <dubbo:application name="${dubbo.application.name}" organization="weidai" owner="jiangjun.xu"/>
+
+    <!-- 使用zookeeper注册中心暴露服务地址 -->
+    <dubbo:registry protocol="zookeeper" address="${zookeeper.address}"/>
+
+    <!-- 用dubbo协议在20880端口暴露服务 -->
+    <dubbo:protocol name="dubbo" port="${dubbo.port}" />
+
+    <!-- 定义dubbo超时时间 -->
+    <dubbo:provider timeout="${dubbo.provider.timeout}" retries="0"/>
+
+    <!-- 关闭dubbo启动校验依赖服务端是否正常 -->
+    <dubbo:consumer check="false" />
+
+    <!--从注册中心发现监控中心地址-->
+    <dubbo:monitor protocol="registry"/>
+
+
+</beans>
