@@ -1,7 +1,7 @@
 package com.xujiangjun.archetype.manager.redis;
 
 import com.xujiangjun.archetype.exception.BusinessException;
-import com.xujiangjun.archetype.enums.ErrorEnum;
+import com.xujiangjun.archetype.enums.ResponseEnum;
 import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
@@ -50,7 +50,7 @@ public class JedisComponent {
             return callback.doInRedis(jedis);
         } catch (Exception e) {
             log.error("invoke redis happens exception", e);
-            throw new BusinessException(ErrorEnum.REDIS_ERROR, "调用redis处理失败");
+            throw new BusinessException(ResponseEnum.OPS_REDIS_ERROR, "调用redis处理失败");
         } finally {
             if(jedis != null){
                 jedis.close();

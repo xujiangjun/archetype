@@ -1,6 +1,6 @@
 package com.xujiangjun.archetype.support;
 
-import com.xujiangjun.archetype.enums.ErrorEnum;
+import com.xujiangjun.archetype.enums.ResponseEnum;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -54,18 +54,10 @@ public class Result<T> implements Serializable {
         return result;
     }
 
-    public static <T> Result<T> wrapFailureResult(ErrorEnum errorEnum, String message){
+    public static <T> Result<T> wrapFailureResult(ResponseEnum responseEnum) {
         Result<T> result = new Result<>();
-        result.code = errorEnum.getCode();
-        result.message = message;
-        result.success = false;
-        return result;
-    }
-
-    public static <T> Result<T> wrapFailureResult(ErrorEnum errorEnum) {
-        Result<T> result = new Result<>();
-        result.code = errorEnum.getCode();
-        result.message = errorEnum.getMessage();
+        result.code = responseEnum.getCode();
+        result.message = responseEnum.getMessage();
         result.success = false;
         return result;
     }

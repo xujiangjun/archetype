@@ -1,7 +1,7 @@
 package com.xujiangjun.archetype.manager.util;
 
 import com.xujiangjun.archetype.exception.BusinessException;
-import com.xujiangjun.archetype.enums.ErrorEnum;
+import com.xujiangjun.archetype.enums.ResponseEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -40,7 +40,7 @@ public class DateUtils {
                 StringBuilder sb = new StringBuilder();
                 sb.append("字段值：").append(str).append("不支持日期格式化");
                 log.warn(sb.toString());
-                throw new BusinessException(ErrorEnum.FORMAT_ERROR, sb.toString());
+                throw new BusinessException(ResponseEnum.DATE_FORMAT_ERROR, sb.toString());
         }
         return pattern;
     }

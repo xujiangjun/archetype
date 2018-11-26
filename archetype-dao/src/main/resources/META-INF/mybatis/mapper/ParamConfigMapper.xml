@@ -155,7 +155,7 @@
     where param_no = #{paramNo,jdbcType=VARCHAR} and is_deleted = '0'
   </select>
 
-  <update id="updateByParamNo" parameterType="com.xujiangjun.archetype.model.config.ParamConfigDO">
+  <update id="updateByParamNoSelective" parameterType="com.xujiangjun.archetype.model.config.ParamConfigDO">
     update c_param_config
     <set>
       <if test="isDeleted != null">

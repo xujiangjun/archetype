@@ -2,7 +2,7 @@ package com.xujiangjun.archetype.manager.util;
 
 import com.sun.mail.util.MailSSLSocketFactory;
 import com.xujiangjun.archetype.exception.BusinessException;
-import com.xujiangjun.archetype.enums.ErrorEnum;
+import com.xujiangjun.archetype.enums.ResponseEnum;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.mail.*;
@@ -69,7 +69,7 @@ public class MailUtils {
             String msg = new StringBuilder("邮件发送失败，toUser:").append(toUser).append(", subject:").append(subject)
                     .append(", content:").append(content).toString();
             log.error(msg, e);
-            throw new BusinessException(ErrorEnum.MAIL_SEND_FAIL);
+            throw new BusinessException(ResponseEnum.MAIL_SEND_FAIL);
         }
     }
 
@@ -85,7 +85,7 @@ public class MailUtils {
             props.put("mail.smtp.ssl.enable", "true");
             props.put("mail.smtp.ssl.socketFactory", sf);
         } catch (GeneralSecurityException e) {
-            throw new BusinessException(ErrorEnum.SYSTEM_ERROR, "初始化MailSSLSocketFactory异常");
+            throw new BusinessException(ResponseEnum.SYSTEM_ERROR, "初始化MailSSLSocketFactory异常");
         }
     }
 

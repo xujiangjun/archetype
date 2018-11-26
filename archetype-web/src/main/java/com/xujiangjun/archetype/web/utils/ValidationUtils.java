@@ -1,4 +1,4 @@
-package com.xujiangjun.archetype.web.support;
+package com.xujiangjun.archetype.web.utils;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;

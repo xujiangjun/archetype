@@ -7,7 +7,7 @@ import lombok.Getter;
  *
  * 错误码的定义是为了便于在多系统情况下出现问题时能够快速定位到某个系统的某个模块，在定位问题时更加方便地追根溯源。
  *
- * 注：公共错误码和项目错误码应拆分为两个枚举类，方便起见此处不进行拆分。
+ * 注：公共错误码和项目错误码理应拆分为两个枚举类，方便起见此处不进行拆分。
  *
  * 目前公共错误码总共分为4位，第1位为错误类别码，第2-4为具体异常定义码。
  *
@@ -20,13 +20,13 @@ import lombok.Getter;
  * @author xujiangjun
  * @since 2018.05.20
  */
-public enum ErrorEnum {
-    SYSTEM_ERROR(1000, "系统出错啦"),
+public enum ResponseEnum {
+    SYSTEM_ERROR(1000, "系统出错啦!"),
     CHECK_FAIL(1001, "校验不通过"),
-    NOT_EXISTS(1002, "数据不存在"),
-    FORMAT_ERROR(1003, "格式化错误"),
-    PARAM_IS_NULL(1004, "参数为空"),
-    REDIS_ERROR(1005, "redis操作异常"),
+    DATA_NOT_EXISTS(1002, "数据不存在"),
+    DATE_FORMAT_ERROR(1003, "日期格式化错误"),
+    REQUEST_PARAM_NULL(1004, "请求参数为空"),
+    OPS_REDIS_ERROR(1005, "redis操作异常"),
     MAIL_SEND_FAIL(1006, "邮件发送失败");
 
     @Getter
@@ -35,7 +35,7 @@ public enum ErrorEnum {
     @Getter
     private String message;
 
-    ErrorEnum(int code, String message) {
+    ResponseEnum(int code, String message) {
         this.code = code;
         this.message = message;
     }

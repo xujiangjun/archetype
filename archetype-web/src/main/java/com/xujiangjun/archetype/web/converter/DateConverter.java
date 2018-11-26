@@ -1,4 +1,4 @@
-package com.xujiangjun.archetype.web.support;
+package com.xujiangjun.archetype.web.converter;
 
 import com.xujiangjun.archetype.manager.util.DateUtils;
 import org.joda.time.format.DateTimeFormat;

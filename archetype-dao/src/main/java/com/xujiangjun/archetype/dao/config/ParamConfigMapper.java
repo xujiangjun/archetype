@@ -15,5 +15,5 @@ public interface ParamConfigMapper extends BaseMapper<ParamConfigDO> {
 
     ParamConfigDO selectByParamNo(String paramNo);
 
-    int updateByParamNo(ParamConfigDO paramConfigDO);
+    int updateByParamNoSelective(ParamConfigDO paramConfigDO);
 }

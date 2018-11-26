@@ -1,4 +1,4 @@
-package com.xujiangjun.archetype.api.support;
+package com.xujiangjun.archetype.support;
 
 import lombok.Data;
 

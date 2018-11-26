@@ -1,4 +1,4 @@
-package com.xujiangjun.archetype.service.api.impl;
+package com.xujiangjun.archetype.api.impl;
 
 import com.xujiangjun.archetype.api.RpcShopService;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.xujiangjun.archetype.web.support;
+package com.xujiangjun.archetype.web.utils;
 
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.ObjectMetadata;
@@ -17,7 +17,7 @@ import java.io.InputStream;
  * @since 2018.05.20
  */
 @Slf4j
-public class OSSHelper {
+public class OSSUtils {
 
     private static final String  accessKeyId     = "";
     private static final String  accessKeySecret = "";

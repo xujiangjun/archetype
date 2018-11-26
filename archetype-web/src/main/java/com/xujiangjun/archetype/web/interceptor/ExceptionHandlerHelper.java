@@ -1,8 +1,8 @@
-package com.xujiangjun.archetype.web.support;
+package com.xujiangjun.archetype.web.interceptor;
 
 import com.xujiangjun.archetype.support.Result;
 import com.xujiangjun.archetype.exception.BusinessException;
-import com.xujiangjun.archetype.enums.ErrorEnum;
+import com.xujiangjun.archetype.enums.ResponseEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -29,14 +29,15 @@ public class ExceptionHandlerHelper {
     public Result exceptionHandler(Exception e, HttpServletRequest request) {
         printParameter(request);
         if (e instanceof BusinessException) {
+            log.error("【Http请求】抛出自定义异常", e);
             BusinessException exception = (BusinessException) e;
             return Result.wrapFailureResult(exception.getCode(), exception.getMessage());
         } else if(e instanceof DataAccessException){
-            log.error("捕获DataAccessException异常", e);
-            return Result.wrapFailureResult(ErrorEnum.SYSTEM_ERROR);
+            log.error("【Http请求】抛出数据访问异常", e);
+            return Result.wrapFailureResult(ResponseEnum.SYSTEM_ERROR);
         } else {
-            log.error("服务器内部发生非自定义异常，msg:", e);
-            return Result.wrapFailureResult(ErrorEnum.SYSTEM_ERROR);
+            log.error("【Http请求】抛出未知异常，msg:", e);
+            return Result.wrapFailureResult(ResponseEnum.SYSTEM_ERROR);
         }
     }
 

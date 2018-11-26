@@ -1,9 +1,9 @@
 package com.xujiangjun.archetype.service.base.impl;
 
 import com.xujiangjun.archetype.dao.config.ParamConfigMapper;
-import com.xujiangjun.archetype.constant.SystemConsts;
+import com.xujiangjun.archetype.enums.SystemEnum;
 import com.xujiangjun.archetype.support.Result;
-import com.xujiangjun.archetype.enums.ErrorEnum;
+import com.xujiangjun.archetype.enums.ResponseEnum;
 import com.xujiangjun.archetype.manager.util.StringUtils;
 import com.xujiangjun.archetype.model.config.ParamConfigDO;
 import com.xujiangjun.archetype.service.base.ParamConfigService;
@@ -38,11 +38,11 @@ public class ParamConfigServiceImpl implements ParamConfigService {
     @Override
     public Result<String> getByParamNo(String paramNo) {
         if (StringUtils.isEmpty(paramNo)) {
-            return Result.wrapFailureResult(ErrorEnum.PARAM_IS_NULL);
+            return Result.wrapFailureResult(ResponseEnum.REQUEST_PARAM_NULL);
         }
         ParamConfigDO paramConfigDO = paramConfigMapper.selectByParamNo(paramNo);
         if (paramConfigDO == null) {
-            return Result.wrapFailureResult(ErrorEnum.NOT_EXISTS);
+            return Result.wrapFailureResult(ResponseEnum.DATA_NOT_EXISTS);
         }
         return Result.wrapSuccessfulResult(paramConfigDO.getParamValue());
     }
@@ -104,10 +104,10 @@ public class ParamConfigServiceImpl implements ParamConfigService {
         }
         String originParamValue = result.getData();
         if (StringUtils.isEmpty(originParamValue)) {
-            return Result.wrapFailureResult(ErrorEnum.NOT_EXISTS, "配置项中的值为空");
+            return Result.wrapFailureResult(ResponseEnum.DATA_NOT_EXISTS, "配置项中的值为空");
         }
         if (!StringUtils.contains(paramValue, originParamValue)) {
-            return Result.wrapFailureResult(ErrorEnum.NOT_EXISTS, "配置项中不包含指定删除的值");
+            return Result.wrapFailureResult(ResponseEnum.DATA_NOT_EXISTS, "配置项中不包含指定删除的值");
         }
         String newParamValue = StringUtils.removeContains(paramValue, originParamValue);
         return doUpdateByParamNo(paramNo, newParamValue, originParamValue);
@@ -139,11 +139,11 @@ public class ParamConfigServiceImpl implements ParamConfigService {
         paramConfigDO.setParamNo(paramNo);
         paramConfigDO.setParamValue(paramValue);
         paramConfigDO.setGmtModified(new Date());
-        paramConfigDO.setModifier(SystemConsts.CURRENT_SYSTEM);
-        int updateCount = paramConfigMapper.updateByParamNo(paramConfigDO);
+        paramConfigDO.setModifier(SystemEnum.ARCHETYPE.getName());
+        int updateCount = paramConfigMapper.updateByParamNoSelective(paramConfigDO);
         if (updateCount < 1) {
             log.error("更新配置项:{}, 原paramValue:{}, 新paramValue:{}", paramNo, originParamValue, paramValue);
-            return Result.wrapFailureResult(ErrorEnum.SYSTEM_ERROR);
+            return Result.wrapFailureResult(ResponseEnum.SYSTEM_ERROR);
         }
         return Result.wrapSuccessfulResult("更新配置项" + paramNo + "成功");
     }

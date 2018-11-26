@@ -1,4 +1,4 @@
-package com.xujiangjun.archetype.web.support;
+package com.xujiangjun.archetype.web.converter;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.xujiangjun.archetype.exception.BusinessException;
-import com.xujiangjun.archetype.enums.ErrorEnum;
+import com.xujiangjun.archetype.enums.ResponseEnum;
 import com.xujiangjun.archetype.manager.util.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
@@ -71,7 +71,7 @@ public class CustomObjectMapper extends ObjectMapper {
                 sb.append(jsonParser.getCurrentName()).append("的字段值是：").append(jsonParser.getText())
                         .append("不支持日期格式化");
                 log.warn(sb.toString());
-                throw new BusinessException(ErrorEnum.FORMAT_ERROR, sb.toString());
+                throw new BusinessException(ResponseEnum.DATE_FORMAT_ERROR, sb.toString());
         }
         return pattern;
     }

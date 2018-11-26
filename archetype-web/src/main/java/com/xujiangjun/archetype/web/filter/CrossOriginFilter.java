@@ -16,6 +16,7 @@ import java.io.IOException;
  * @since 2018.05.20
  */
 public class CrossOriginFilter extends OncePerRequestFilter {
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {

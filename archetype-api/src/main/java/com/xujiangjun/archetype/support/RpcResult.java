@@ -1,4 +1,4 @@
-package com.xujiangjun.archetype.api.support;
+package com.xujiangjun.archetype.support;
 
 import lombok.Data;
 
@@ -6,6 +6,11 @@ import java.io.Serializable;
 
 /**
  * 封装结果类
+ *
+ * 思考：
+ *   1.取消success字段，使用(code == 0)来表示成功。
+ *   2.(code > 0)表示可以直接弹出的错误提示。
+ *   3.(code < 0)表示需要前端根据错误码进行转换的错误提示。
  *
  * @author xujiangjun
  * @since 2018.05.20
@@ -32,6 +37,7 @@ public class RpcResult<T> implements Serializable {
 
     public static <T> RpcResult<T> wrapSuccessfulResult(T data){
         RpcResult<T> result = new RpcResult<>();
+        result.code = 0;
         result.success = true;
         result.data = data;
         return result;
@@ -39,6 +45,7 @@ public class RpcResult<T> implements Serializable {
 
     public static <T> RpcResult<T> wrapSuccessfulResult(T data, int total){
         RpcResult<T> result = new RpcResult<>();
+        result.code = 0;
         result.success = true;
         result.data = data;
         result.total = total;

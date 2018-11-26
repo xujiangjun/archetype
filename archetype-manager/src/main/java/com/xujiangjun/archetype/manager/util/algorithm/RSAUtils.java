@@ -1,6 +1,6 @@
 package com.xujiangjun.archetype.manager.util.algorithm;
 
-import com.xujiangjun.archetype.enums.ErrorEnum;
+import com.xujiangjun.archetype.enums.ResponseEnum;
 import com.xujiangjun.archetype.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
@@ -53,7 +53,7 @@ public class RSAUtils {
             return Base64.encodeBase64String(signature.sign());
         } catch (Exception e) {
             log.error("数字签名异常", e);
-            throw new BusinessException(ErrorEnum.SYSTEM_ERROR);
+            throw new BusinessException(ResponseEnum.SYSTEM_ERROR);
         }
     }
 
@@ -77,7 +77,7 @@ public class RSAUtils {
             return signature.verify(Base64.decodeBase64(sign));
         } catch (Exception e) {
             log.error("数字签名校验异常", e);
-            throw new BusinessException(ErrorEnum.SYSTEM_ERROR);
+            throw new BusinessException(ResponseEnum.SYSTEM_ERROR);
         }
     }
 
@@ -102,7 +102,7 @@ public class RSAUtils {
             return cipher.doFinal(data.getBytes());
         } catch (Exception e) {
             log.error("私钥加密异常", e);
-            throw new BusinessException(ErrorEnum.SYSTEM_ERROR);
+            throw new BusinessException(ResponseEnum.SYSTEM_ERROR);
         }
     }
 
@@ -127,7 +127,7 @@ public class RSAUtils {
             return cipher.doFinal(data.getBytes());
         } catch (Exception e) {
             log.error("公钥加密异常", e);
-            throw new BusinessException(ErrorEnum.SYSTEM_ERROR);
+            throw new BusinessException(ResponseEnum.SYSTEM_ERROR);
         }
     }
 
@@ -152,7 +152,7 @@ public class RSAUtils {
             return cipher.doFinal(data);
         } catch (Exception e) {
             log.error("私钥解密异常", e);
-            throw new BusinessException(ErrorEnum.SYSTEM_ERROR);
+            throw new BusinessException(ResponseEnum.SYSTEM_ERROR);
         }
     }
 
@@ -177,7 +177,7 @@ public class RSAUtils {
             return cipher.doFinal(data);
         } catch (Exception e) {
             log.error("公钥解密异常", e);
-            throw new BusinessException(ErrorEnum.SYSTEM_ERROR);
+            throw new BusinessException(ResponseEnum.SYSTEM_ERROR);
         }
     }
 
@@ -219,7 +219,7 @@ public class RSAUtils {
             return keyMap;
         } catch (NoSuchAlgorithmException e) {
             log.error("初始化密钥异常", e);
-            throw new BusinessException(ErrorEnum.SYSTEM_ERROR);
+            throw new BusinessException(ResponseEnum.SYSTEM_ERROR);
         }
     }
 
