@@ -104,10 +104,10 @@ public class ParamConfigServiceImpl implements ParamConfigService {
         }
         String originParamValue = result.getData();
         if (StringUtils.isEmpty(originParamValue)) {
-            return Result.wrapFailureResult(ResponseEnum.DATA_NOT_EXISTS, "配置项中的值为空");
+            return Result.wrapFailureResult(ResponseEnum.DATA_NOT_EXISTS.getCode(), "配置项中的值为空");
         }
         if (!StringUtils.contains(paramValue, originParamValue)) {
-            return Result.wrapFailureResult(ResponseEnum.DATA_NOT_EXISTS, "配置项中不包含指定删除的值");
+            return Result.wrapFailureResult(ResponseEnum.DATA_NOT_EXISTS.getCode(), "配置项中不包含指定删除的值");
         }
         String newParamValue = StringUtils.removeContains(paramValue, originParamValue);
         return doUpdateByParamNo(paramNo, newParamValue, originParamValue);
