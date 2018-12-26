@@ -4,11 +4,16 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-    <classPathEntry location="/Users/xujiangjun/.m2/repository/mysql/mysql-connector-java/5.1.35/mysql-connector-java-5.1.35.jar"/>
     <!-- mvn mybatis-generator:generate -->
-    <context id="oneHour" targetRuntime="org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl">
+    <context id="oneHour" targetRuntime="MyBatis3Simple">
         <property name="suppressAllComments" value="true"/>
         <property name="useActualColumnNames" value="false"/>
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+            <property name="caseSensitive" value="true"/>
+            <property name="lombok" value="Getter,Setter,ToString,Accessors"/>
+        </plugin>
 
         <commentGenerator>
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
@@ -41,10 +46,8 @@
         </javaClientGenerator>
 
         <!-- 请自行更改 -->
-        <table tableName="c_param_config" domainObjectName="ParamConfig" enableCountByExample="false"
-               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false" enableDeleteByPrimaryKey="false">
-			<generatedKey column="id" sqlStatement="Mysql" type="post" identity="true"/>
+        <table tableName="c_param_config" domainObjectName="ParamConfigDO">
+			<generatedKey column="id" sqlStatement="Mysql"/>
 		</table>
     </context>
 </generatorConfiguration>
