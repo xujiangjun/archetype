@@ -1,8 +1,14 @@
 package com.xujiangjun.archetype.manager.util;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
+import com.xujiangjun.archetype.enums.ResponseEnum;
+import com.xujiangjun.archetype.exception.BusinessException;
+import lombok.extern.slf4j.Slf4j;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.*;
 
 /**
@@ -11,6 +17,7 @@ import java.util.*;
  * @author xujiangjun
  * @since 2018.05.20
  */
+@Slf4j
 public class StringUtils {
 
     /**
@@ -87,6 +94,25 @@ public class StringUtils {
         Map<String,String> map = Splitter.on(",").omitEmptyStrings().trimResults()
                 .withKeyValueSeparator(":").split(complexStr);
         return map;
+    }
+
+    public static Properties getProperties(String str){
+        Properties properties = new Properties();
+        try {
+            properties.load(new StringReader(str));
+            return properties;
+        } catch (IOException e) {
+            log.error("字符串转换为Properties异常, str：{}", str, e);
+            throw new BusinessException(ResponseEnum.SYSTEM_ERROR);
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(JSON.toJSONString(getProperties("# aaa\n" +
+                "  h1=a2\n" +
+                "    h2  =    b2")));
+        System.out.println(JSON.toJSONString(getProperties("fruits     a,b,c,\\ d")));
+        System.out.println(JSON.toJSONString(getProperties("# aaa\nfruits     a,b,c,\\ d")));
     }
 
 }
